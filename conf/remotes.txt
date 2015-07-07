@@ -1,0 +1,10 @@
+# Index for automatically configuring users' Git remote access.
+# Format: tab-separated EMAIL, NAME, GITURL
+#
+# EMAIL address should match email address used for ssh-keygen to initialize
+# ~/.ssh/id_rsa.pub
+#
+# GITURL will be used to push changes from that specific user.
+# 
+# edit this example to test it!
+joe.user@example.com	Joe User	git@github.com:joeuser/ezgit.git
