@@ -1,24 +1,27 @@
 
 STATUSDIR=conf/status
 PUBKEYFILE=$(HOME)/.ssh/id_rsa.pub
-MYREMOTE=mine
-REMOTEFILE=conf/remotes.txt
+MYBRANCH=$(USER)
 
-# basic Git setup: user name, email and push-remote
-${STATUSDIR}/myremote: 
-	$(STATUSDIR)/add_my_remote.sh $(MYREMOTE) $(PUBKEYFILE) $(REMOTEFILE)
+# config Git user name, email
+${STATUSDIR}/gitconfig: 
+	git config user.name `getent passwd $(USER)|cut -d: -f5`
+	git config user.email `cut -d' ' -f3 $(PUBKEYFILE)`
 	touch $@
 	@echo "Successfully setup basic Git configuration"
 
-.PHONY: pull push update
+.PHONY: pull push update setup
+
+# initial setup
+setup: $(STATUSDIR)/gitconfig update
 
 
 # simple wrapper for push/pull 
-pull: $(STATUSDIR)/myremote
+pull:
 	git pull origin master
 	@echo "Successfully retrieved latest data"
 
-push: $(STATUSDIR)/myremote $(STATUSDIR)/gitg
+push: setup $(STATUSDIR)/gitg
 	@echo "First commit your changes using the Gitg tool, by clicking"
 	@echo "on the Commit tab, typing a Commit message explaining your"
 	@echo "changes, then clicking the Commit button, and closing the"
@@ -29,7 +32,7 @@ push: $(STATUSDIR)/myremote $(STATUSDIR)/gitg
 	@head -1 >/dev/null
 	git add --all
 	gitg
-	git push $(MYREMOTE) master
+	git push origin master:$(MYBRANCH)
 	@echo "Successfully synchronized your commit(s) to the repository."
 
 #############################################################
