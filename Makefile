@@ -10,7 +10,7 @@ ${STATUSDIR}/gitconfig:
 	touch $@
 	@echo "Successfully setup basic Git configuration"
 
-.PHONY: pull push update setup
+.PHONY: pull push update setup help
 
 # initial setup
 setup: $(STATUSDIR)/gitconfig update
@@ -47,3 +47,11 @@ ${STATUSDIR}/gitg:
 	sudo apt-get install gitg
 	touch $@
 
+############################################################
+# help message
+help:
+	@echo "Commands you can type:"
+	@echo "make setup: setup initial Git config and install required software if any"
+	@echo "make pull: get the latest data from the shared repository"
+	@echo "make push: commit and share your data changes to the shared repository"
+	@echo "make update: install new software requirements if any" 
