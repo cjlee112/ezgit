@@ -1,0 +1,8 @@
+# Make-generated timestamps
+conf/status/
+
+# emacs backup files
+*~
+
+# virtualenv directories
+_ve*/
