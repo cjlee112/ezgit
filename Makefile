@@ -3,8 +3,11 @@ STATUSDIR=conf/status
 PUBKEYFILE=$(HOME)/.ssh/id_rsa.pub
 MYBRANCH=$(USER)
 
+${STATUSDIR}: 
+	mkdir $(STATUSDIR)
+
 # config Git user name, email
-${STATUSDIR}/gitconfig: 
+${STATUSDIR}/gitconfig: $(STATUSDIR)
 	git config user.name `getent passwd $(USER)|cut -d: -f5`
 	git config user.email `cut -d' ' -f3 $(PUBKEYFILE)`
 	touch $@
@@ -13,7 +16,7 @@ ${STATUSDIR}/gitconfig:
 .PHONY: pull push update setup help
 
 # initial setup
-setup: $(STATUSDIR)/gitconfig update
+setup: $(STATUSDIR) $(STATUSDIR)/gitconfig update
 
 
 # simple wrapper for push/pull 
