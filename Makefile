@@ -25,18 +25,29 @@ pull:
 	@echo "Successfully retrieved latest data"
 
 push: setup $(STATUSDIR)/gitg
-	@echo "First commit your changes using the Gitg tool, by clicking"
-	@echo "on the Commit tab, typing a Commit message explaining your"
-	@echo "changes, then clicking the Commit button, and closing the"
-	@echo "Gitg window.  Then your committed changes will be pushed"
-	@echo "to the repository."
+	@echo "1. Make sure your changed files are saved."
 	@echo
-	@echo "Press Enter when your changes are ready to commit in Gitg:"
+	@echo "2. Commit your changes using the Gitg tool, by clicking"
+	@echo "   on the Commit tab, typing a Commit message (in the center"
+	@echo "   of the Commit pane) explaining your changes, optionally"
+	@echo "   adding new files, then clicking the Commit button,"
+	@echo "   and closing the Gitg window."
+	@echo "   NOTE: all changed repository files will by default be"
+	@echo "   included for the commit (Staged, listed on the right"
+	@echo "   side of the Commit pane).  If there are NEW file(s) that you"
+	@echo "   want permanently added to the repository and shared to all"
+	@echo "   users, drag them from the Unstaged area (on the left side of"
+	@echo "   the pane) to the Staged area, BEFORE clicking the Commit button."
+	@echo
+	@echo "3. Once you close the Gitg window, your committed changes"
+	@echo "   will be pushed to the shared repository."
+	@echo
+	@echo "Once your changes are saved, press Enter to launch the Gitg tool:"
 	@head -1 >/dev/null
-	git add --all
+	git add --update
 	gitg
 	git push origin master:$(MYBRANCH)
-	@echo "Successfully synchronized your commit(s) to the repository."
+	@echo "Successfully pushed your commit(s) to the repository."
 
 #############################################################
 # install rules
