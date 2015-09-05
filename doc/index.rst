@@ -11,6 +11,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   secure_vbox_mint_setup
+
 
 
 Indices and tables
