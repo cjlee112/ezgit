@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting up Secure Repository Access Using VirtualBox + Mint &mdash; EZgit 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EZgit 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to EZgit’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to EZgit’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EZgit 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setting-up-secure-repository-access-using-virtualbox-mint">
+<h1>Setting up Secure Repository Access Using VirtualBox + Mint<a class="headerlink" href="#setting-up-secure-repository-access-using-virtualbox-mint" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>You need:</p>
+<ul class="simple">
+<li>VirtualBox installed on your computer</li>
+<li>Downloaded ISO image for Linux Mint (17.1 MATE 64 bit recommended).</li>
+</ul>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>You can see a video of the general process: <a class="reference external" href="https://youtu.be/lPLVnhMj7QM">https://youtu.be/lPLVnhMj7QM</a></p>
+<p><strong>Note</strong> the instructions in <strong>this document</strong> are correct and up-to-date, so
+please follow the instructions here rather than the video,
+if the video differs in some detail(s).</p>
+<ol class="arabic">
+<li><p class="first">Launch VirtualBox.</p>
+</li>
+<li><p class="first">Create a new virtual machine:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Click <strong>New</strong></li>
+<li>Enter a name for your new VM (e.g. &#8220;securerepo&#8221;)</li>
+<li>Select the VM OS: Linux, Ubuntu (64 bit)</li>
+<li>Select RAM amount to dedicate to the VM (e.g. 1 GB)</li>
+<li>Create hard drive for VM with default settings and desired size</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Mount ISO image of Linux Mint, by clicking <strong>Settings - Storage - Controller IDE Empty - CD/DVD Drive - Select your image</strong>.</p>
+</li>
+<li><p class="first">Start the VM.</p>
+</li>
+<li><p class="first">Installation:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Double-click <strong>Install Linux Mint</strong>.</p>
+</li>
+<li><p class="first">Select install language</p>
+</li>
+<li><p class="first">Select &#8220;Encrypt installation&#8221; to encrypt the whole virtual machine.</p>
+</li>
+<li><p class="first">Enter a passpharase for encryption</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Remember your passphrase or you will NOT be able to access
+this virtual machine or its contents!!</p>
+</div>
+</li>
+<li><p class="first">Select timezone</p>
+</li>
+<li><p class="first">Select input language</p>
+</li>
+<li><p class="first">Enter a username and password</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>choose a username that other users of the repository will
+easily recognize as you, as this username will be used
+for pushing updates you make, to the shared repository.</li>
+<li>to keep things easy to remember, we suggest you re-use
+your disk encryption passphrase as your user password
+(i.e. use the same password for both purposes, so that
+you only have to remember one password).</li>
+</ul>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">When the installation finishes, click <strong>Restart now</strong>.</p>
+</li>
+<li><p class="first">Enter your encryption passphrase to gain access to your virtual machine.</p>
+</li>
+<li><p class="first">Login with username and password.</p>
+</li>
+<li><p class="first">Start a terminal by clicking <strong>Menu - Terminal</strong>, and type the following
+command to create a security key:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
+</pre></div>
+</div>
+<p>where <cite>your_email&#64;example.com</cite> is your email address.  When it asks
+you to enter a security passphrase, simply
+enter the same passphrase you used as your disk encryption passphrase
+/ user password.  That way you will only have to remember one
+passphrase.</p>
+<p>Copy the public key you just created, by typing the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>cat ~/.ssh/id_rsa.pub
+</pre></div>
+</div>
+<p>Use your mouse to select the key text (starting from <tt class="docutils literal"><span class="pre">ssh-rsa</span></tt>, down to
+your email address), then choose <strong>Edit - Copy</strong> from the Terminal window.</p>
+</li>
+<li><p class="first">Within your Virtual Machine, start a web browser by clicking
+<strong>Menu - Favorites - Firefox</strong>, log in to your email via the web,
+and send your public key, by pasting it into an email,
+to your secure repository server administrator.</p>
+</li>
+</ol>
+<p>Once your repository administrator has added your key to the
+repository access list, they will give you a repository URL for
+you to gain access to the secure repository.</p>
+</div>
+<div class="section" id="accessing-the-secure-repository-for-the-first-time">
+<h2>Accessing the Secure Repository for the first time<a class="headerlink" href="#accessing-the-secure-repository-for-the-first-time" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Start your Virtual Machine and log in as in Steps 7-8 above.</p>
+</li>
+<li><p class="first">Start a terminal by clicking <strong>Menu - Terminal</strong>, and type the following
+command to clone the secure repository to your virtual machine:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone YOUR_URL
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">YOUR_URL</span></tt> is the repository URL given to you by your
+repository administrator.  It will ask you for your passphrase:
+type your passphrase and press Enter.</p>
+<p>It will create a new directory in your home folder, containing the
+cloned repository files.  Note the name of this new repository directory.</p>
+</li>
+<li><p class="first">Open a file browser by clicking <strong>Menu - Home Folder</strong>, double-click the
+repository folder, and double-click <strong>ezgit_setup.sh</strong> to run the
+necessary steps for setting up all the tools needed for your
+repository.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="working-with-data-files-in-the-repository">
+<h2>Working with data files in the repository<a class="headerlink" href="#working-with-data-files-in-the-repository" title="Permalink to this headline">¶</a></h2>
+<p>Please understand that the data in your repository is intended
+to be kept strictly secure, by keeping it inside a virtual machine
+that is isolated from the rest of your physical computer.  That
+means you view and edit the data solely within the secure virtual
+machine.  If you copy data outside of the secure virtual machine,
+all security guarantees are void.</p>
+<ul class="simple">
+<li>within the file browser you can double click a file or folder
+to open it, view and edit the data.</li>
+<li>note that some data files are &#8220;back-end data files&#8221; not intended
+to be directly opened by users.</li>
+</ul>
+</div>
+<div class="section" id="guidelines-for-keeping-your-copy-of-the-repository-secure">
+<h2>Guidelines for Keeping Your Copy of the Repository Secure<a class="headerlink" href="#guidelines-for-keeping-your-copy-of-the-repository-secure" title="Permalink to this headline">¶</a></h2>
+<p>When your Virtual Machine is shut down, no one can access its
+data without your encryption passphrase, even if they steal your
+computer.</p>
+<ul class="simple">
+<li>Always shut down your Virtual Machine (<strong>Menu - Quit - Shut Down</strong>)
+whenever you are not actually using it.</li>
+<li>Never suspend / put to sleep your physical computer while the Virtual Machine
+is running &#8211; always shut down the Virtual Machine first.</li>
+<li>All data transmissions with the secure
+repository server (clone, pull, push) are automatically encrypted.</li>
+</ul>
+</div>
+<div class="section" id="getting-the-latest-data-updates">
+<h2>Getting the Latest Data Updates<a class="headerlink" href="#getting-the-latest-data-updates" title="Permalink to this headline">¶</a></h2>
+<p>Open a file browser as described above, and double-click the
+<strong>ezgit_pull.sh</strong> tool to pull the latest updates from the secure
+repository server.</p>
+</div>
+<div class="section" id="sharing-your-new-or-modified-data-to-other-users">
+<h2>Sharing your new or modified data to other users<a class="headerlink" href="#sharing-your-new-or-modified-data-to-other-users" title="Permalink to this headline">¶</a></h2>
+<p>If you modify data files in the repository, or add new data
+files, and want to share your changes to others,
+open a file browser as described above, and double-click the
+<strong>ezgit_push.sh</strong> tool to push your changes to the secure
+repository server.  Follow the on-screen instructions to
+choose what new files if any to include in your &#8220;committed&#8221; changes.
+Once you commit your changes, they will be pushed to the
+secure repository server.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting up Secure Repository Access Using VirtualBox + Mint</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#instructions">Instructions</a></li>
+<li><a class="reference internal" href="#accessing-the-secure-repository-for-the-first-time">Accessing the Secure Repository for the first time</a></li>
+<li><a class="reference internal" href="#working-with-data-files-in-the-repository">Working with data files in the repository</a></li>
+<li><a class="reference internal" href="#guidelines-for-keeping-your-copy-of-the-repository-secure">Guidelines for Keeping Your Copy of the Repository Secure</a></li>
+<li><a class="reference internal" href="#getting-the-latest-data-updates">Getting the Latest Data Updates</a></li>
+<li><a class="reference internal" href="#sharing-your-new-or-modified-data-to-other-users">Sharing your new or modified data to other users</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to EZgit&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/secure_vbox_mint_setup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to EZgit’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">EZgit 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Christopher Lee.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
