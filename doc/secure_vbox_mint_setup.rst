@@ -141,10 +141,20 @@ data without your encryption passphrase, even if they steal your
 computer.
 
 * Always shut down your Virtual Machine (**Menu - Quit - Shut Down**)
-  whenever you are not actually using it.
+  whenever you are not actually using it.  If you need to take a break or
+  work on something else, save your files and shutdown the Virtual Machine.
 
 * Never suspend / put to sleep your physical computer while the Virtual Machine
   is running -- always shut down the Virtual Machine first.
+
+* Never use your Virtual Machine for anything that could compromise its
+  security, e.g. anything that involves traffic with the outside world such 
+  as web browsing, email, downloading files, or installing software not
+  mandated by your repository administrator.  Always conduct such activities
+  **outside** the Virtual Machine (if you *really* want to safeguard your
+  repository, such activities should only be performed on a separate
+  computer).  Only use the Virtual Machine for its one intended purpose --
+  analyzing data in the repository.
 
 * All data transmissions with the secure
   repository server (clone, pull, push) are automatically encrypted.
