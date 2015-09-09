@@ -10,6 +10,7 @@ You need:
 
 * VirtualBox installed on your computer
 * Downloaded ISO image for Linux Mint (17.1 MATE 64 bit recommended).
+* free disk space for your new data repository (20 GB recommended).
 
 Instructions
 ------------------
@@ -49,7 +50,10 @@ if the video differs in some detail(s).
 
 	- Select timezone
 	- Select input language
-	- Enter a username and password
+	- Enter a username and password.
+          Please enter your correct full name (e.g. John Smith),
+          and a recognizable username (e.g. jsmith), because this will be used
+          to label all data changes you share with others.
 
           .. warning::
              * choose a username that other users of the repository will
@@ -72,7 +76,10 @@ if the video differs in some detail(s).
  
 	ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
-   where `your_email@example.com` is your email address.  When it asks
+   where `your_email@example.com` is your email address.
+   Please enter your correct
+   email address when requested by ``ssh-keygen``, as this will be used
+   to label all data changes you share with others.  When it asks
    you to enter a security passphrase, simply
    enter the same passphrase you used as your disk encryption passphrase
    / user password.  That way you will only have to remember one
@@ -113,7 +120,7 @@ Accessing the Secure Repository for the first time
    cloned repository files.  Note the name of this new repository directory.
 
 3. Open a file browser by clicking **Menu - Home Folder**, double-click the
-   repository folder, and double-click **ezgit_setup.sh** to run the 
+   repository folder, and double-click **setup.sh** to run the 
    necessary steps for setting up all the tools needed for your
    repository.
 
@@ -127,10 +134,20 @@ means you view and edit the data solely within the secure virtual
 machine.  If you copy data outside of the secure virtual machine,
 all security guarantees are void.
 
+* bear in mind that your virtual machine is like "running another computer
+  inside your computer", with its own separate set of controls and 
+  software.  Its main **Menu** is in the bottom left of the virtual machine's
+  window.
+* you can open a file browser by clicking **Menu - Home Folder**.
 * within the file browser you can double click a file or folder
   to open it, view and edit the data.
-* note that some data files are "back-end data files" not intended
+* you can open the virtual machine's software applications, by clicking
+  on its **Menu - Applications**.
+* note that some data files may be "back-end data files" not intended
   to be directly opened by users.
+* always shut down your virtual machine by clicking
+  **Menu -- Quit -- Shut Down**, rather than just trying to close
+  its window, or leaving it always open.
 
 
 Guidelines for Keeping Your Copy of the Repository Secure
@@ -163,8 +180,24 @@ Getting the Latest Data Updates
 ----------------------------------
 
 Open a file browser as described above, and double-click the
-**ezgit_pull.sh** tool to pull the latest updates from the secure
+**pull.sh** tool to pull the latest updates from the secure
 repository server.
+
+Getting the Latest Software Updates
+-------------------------------------
+
+If your repo admin has added extra software installation requirements
+to your repo (and informed you of this), the new software can be automatically
+installed for you as follows.  First, double-click **pull.sh** 
+as described above to ensure you have the latest configuration.
+Next, double-click the
+**update.sh** tool to install the latest software requirements.
+
+.. note::
+   **update.sh** DOES NOT modify the versions of any
+   of your existing software.  To make sure you have the latest
+   *versions* of software, use the **Menu -- Administration -- Update Manager**
+   from the main menu of your virtual machine.
 
 Sharing your new or modified data to other users
 -----------------------------------------------------------
@@ -172,7 +205,7 @@ Sharing your new or modified data to other users
 If you modify data files in the repository, or add new data
 files, and want to share your changes to others, 
 open a file browser as described above, and double-click the
-**ezgit_push.sh** tool to push your changes to the secure
+**push.sh** tool to push your changes to the secure
 repository server.  Follow the on-screen instructions to
 choose what new files if any to include in your "committed" changes.
 Once you commit your changes, they will be pushed to the
