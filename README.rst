@@ -2,6 +2,9 @@
 ezgit: an easy deployment / synchronization tool
 ######################################################
 
+Documentation is available at http://cjlee112.github.io/ezgit
+
+
 Goal
 -----
 
