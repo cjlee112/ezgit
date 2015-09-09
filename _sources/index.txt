@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    secure_vbox_mint_setup
+   admin
 
 
 

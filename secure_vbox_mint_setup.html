@@ -24,6 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="EZgit 0.1 documentation" href="index.html" />
+    <link rel="next" title="Secure repository Admin guide" href="admin.html" />
     <link rel="prev" title="Welcome to EZgit’s documentation!" href="index.html" /> 
   </head>
   <body>
@@ -33,6 +34,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="admin.html" title="Secure repository Admin guide"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to EZgit’s documentation!"
              accesskey="P">previous</a> |</li>
@@ -53,6 +57,7 @@
 <ul class="simple">
 <li>VirtualBox installed on your computer</li>
 <li>Downloaded ISO image for Linux Mint (17.1 MATE 64 bit recommended).</li>
+<li>free disk space for your new data repository (20 GB recommended).</li>
 </ul>
 </div>
 <div class="section" id="instructions">
@@ -99,7 +104,10 @@ this virtual machine or its contents!!</p>
 </li>
 <li><p class="first">Select input language</p>
 </li>
-<li><p class="first">Enter a username and password</p>
+<li><p class="first">Enter a username and password.
+Please enter your correct full name (e.g. John Smith),
+and a recognizable username (e.g. jsmith), because this will be used
+to label all data changes you share with others.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <ul class="last simple">
@@ -127,7 +135,10 @@ command to create a security key:</p>
 <div class="highlight-python"><div class="highlight"><pre>ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;
 </pre></div>
 </div>
-<p>where <cite>your_email&#64;example.com</cite> is your email address.  When it asks
+<p>where <cite>your_email&#64;example.com</cite> is your email address.
+Please enter your correct
+email address when requested by <tt class="docutils literal"><span class="pre">ssh-keygen</span></tt>, as this will be used
+to label all data changes you share with others.  When it asks
 you to enter a security passphrase, simply
 enter the same passphrase you used as your disk encryption passphrase
 / user password.  That way you will only have to remember one
@@ -166,7 +177,7 @@ type your passphrase and press Enter.</p>
 cloned repository files.  Note the name of this new repository directory.</p>
 </li>
 <li><p class="first">Open a file browser by clicking <strong>Menu - Home Folder</strong>, double-click the
-repository folder, and double-click <strong>ezgit_setup.sh</strong> to run the
+repository folder, and double-click <strong>setup.sh</strong> to run the
 necessary steps for setting up all the tools needed for your
 repository.</p>
 </li>
@@ -181,10 +192,20 @@ means you view and edit the data solely within the secure virtual
 machine.  If you copy data outside of the secure virtual machine,
 all security guarantees are void.</p>
 <ul class="simple">
+<li>bear in mind that your virtual machine is like &#8220;running another computer
+inside your computer&#8221;, with its own separate set of controls and
+software.  Its main <strong>Menu</strong> is in the bottom left of the virtual machine&#8217;s
+window.</li>
+<li>you can open a file browser by clicking <strong>Menu - Home Folder</strong>.</li>
 <li>within the file browser you can double click a file or folder
 to open it, view and edit the data.</li>
-<li>note that some data files are &#8220;back-end data files&#8221; not intended
+<li>you can open the virtual machine&#8217;s software applications, by clicking
+on its <strong>Menu - Applications</strong>.</li>
+<li>note that some data files may be &#8220;back-end data files&#8221; not intended
 to be directly opened by users.</li>
+<li>always shut down your virtual machine by clicking
+<strong>Menu &#8211; Quit &#8211; Shut Down</strong>, rather than just trying to close
+its window, or leaving it always open.</li>
 </ul>
 </div>
 <div class="section" id="guidelines-for-keeping-your-copy-of-the-repository-secure">
@@ -194,9 +215,18 @@ data without your encryption passphrase, even if they steal your
 computer.</p>
 <ul class="simple">
 <li>Always shut down your Virtual Machine (<strong>Menu - Quit - Shut Down</strong>)
-whenever you are not actually using it.</li>
+whenever you are not actually using it.  If you need to take a break or
+work on something else, save your files and shutdown the Virtual Machine.</li>
 <li>Never suspend / put to sleep your physical computer while the Virtual Machine
 is running &#8211; always shut down the Virtual Machine first.</li>
+<li>Never use your Virtual Machine for anything that could compromise its
+security, e.g. anything that involves traffic with the outside world such
+as web browsing, email, downloading files, or installing software not
+mandated by your repository administrator.  Always conduct such activities
+<strong>outside</strong> the Virtual Machine (if you <em>really</em> want to safeguard your
+repository, such activities should only be performed on a separate
+computer).  Only use the Virtual Machine for its one intended purpose &#8211;
+analyzing data in the repository.</li>
 <li>All data transmissions with the secure
 repository server (clone, pull, push) are automatically encrypted.</li>
 </ul>
@@ -204,15 +234,31 @@ repository server (clone, pull, push) are automatically encrypted.</li>
 <div class="section" id="getting-the-latest-data-updates">
 <h2>Getting the Latest Data Updates<a class="headerlink" href="#getting-the-latest-data-updates" title="Permalink to this headline">¶</a></h2>
 <p>Open a file browser as described above, and double-click the
-<strong>ezgit_pull.sh</strong> tool to pull the latest updates from the secure
+<strong>pull.sh</strong> tool to pull the latest updates from the secure
 repository server.</p>
+</div>
+<div class="section" id="getting-the-latest-software-updates">
+<h2>Getting the Latest Software Updates<a class="headerlink" href="#getting-the-latest-software-updates" title="Permalink to this headline">¶</a></h2>
+<p>If your repo admin has added extra software installation requirements
+to your repo (and informed you of this), the new software can be automatically
+installed for you as follows.  First, double-click <strong>pull.sh</strong>
+as described above to ensure you have the latest configuration.
+Next, double-click the
+<strong>update.sh</strong> tool to install the latest software requirements.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong>update.sh</strong> DOES NOT modify the versions of any
+of your existing software.  To make sure you have the latest
+<em>versions</em> of software, use the <strong>Menu &#8211; Administration &#8211; Update Manager</strong>
+from the main menu of your virtual machine.</p>
+</div>
 </div>
 <div class="section" id="sharing-your-new-or-modified-data-to-other-users">
 <h2>Sharing your new or modified data to other users<a class="headerlink" href="#sharing-your-new-or-modified-data-to-other-users" title="Permalink to this headline">¶</a></h2>
 <p>If you modify data files in the repository, or add new data
 files, and want to share your changes to others,
 open a file browser as described above, and double-click the
-<strong>ezgit_push.sh</strong> tool to push your changes to the secure
+<strong>push.sh</strong> tool to push your changes to the secure
 repository server.  Follow the on-screen instructions to
 choose what new files if any to include in your &#8220;committed&#8221; changes.
 Once you commit your changes, they will be pushed to the
@@ -235,6 +281,7 @@ secure repository server.</p>
 <li><a class="reference internal" href="#working-with-data-files-in-the-repository">Working with data files in the repository</a></li>
 <li><a class="reference internal" href="#guidelines-for-keeping-your-copy-of-the-repository-secure">Guidelines for Keeping Your Copy of the Repository Secure</a></li>
 <li><a class="reference internal" href="#getting-the-latest-data-updates">Getting the Latest Data Updates</a></li>
+<li><a class="reference internal" href="#getting-the-latest-software-updates">Getting the Latest Software Updates</a></li>
 <li><a class="reference internal" href="#sharing-your-new-or-modified-data-to-other-users">Sharing your new or modified data to other users</a></li>
 </ul>
 </li>
@@ -243,6 +290,9 @@ secure repository server.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to EZgit&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="admin.html"
+                        title="next chapter">Secure repository Admin guide</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/secure_vbox_mint_setup.txt"
@@ -271,6 +321,9 @@ secure repository server.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="admin.html" title="Secure repository Admin guide"
+             >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Welcome to EZgit’s documentation!"
              >previous</a> |</li>

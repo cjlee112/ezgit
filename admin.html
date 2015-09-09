@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Secure repository Admin guide &mdash; EZgit 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="EZgit 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Setting up Secure Repository Access Using VirtualBox + Mint" href="secure_vbox_mint_setup.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="secure_vbox_mint_setup.html" title="Setting up Secure Repository Access Using VirtualBox + Mint"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">EZgit 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="secure-repository-admin-guide">
+<h1>Secure repository Admin guide<a class="headerlink" href="#secure-repository-admin-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>to use this for secure, private data sharing, you need access
+to a secure Git repository server, and the ability to add
+access rights to specific ssh public keys provided by your users.</li>
+<li>for deploying the respository in an encrypted virtual machine,
+your users need a hypervisor (such as VirtualBox) installed,
+and enough free disk space.  Although a virtual machine can be
+installed in 10 GB or less, default allocations are typically
+20 GB, to provide 10+ GB space for your repository data.</li>
+</ul>
+</div>
+<div class="section" id="setting-up-a-secure-data-repository">
+<h2>Setting up a secure data repository<a class="headerlink" href="#setting-up-a-secure-data-repository" title="Permalink to this headline">¶</a></h2>
+<p>Clone the base repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/cjlee112/ezgit.git MYREPO
+</pre></div>
+</div>
+<p>where MYREPO should be replaced by whatever name you want to assign
+to this repository (remember to substitute the name you chose,
+wherever you see MYREPO in commands below).
+The base repository only contains the basic makerules for
+implementing its &#8220;simplified Git interface&#8221;.</p>
+<p>Next, add your data files to the repository, e.g. something like:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd MYREPO
+cp /some/path/to/my/data/MYFILE .
+git add MYFILE
+git commit -m &#39;added our important data&#39;
+</pre></div>
+</div>
+<p>Push the changes to your own secure repository server (e.g. gitosis), e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>git remote add datarepo SERVERURL
+git push datarepo master
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">datarepo</span></tt> is the name we are assigning to the remote server,
+and <tt class="docutils literal"><span class="pre">SERVERURL</span></tt> is its Git URL.  Whatever you push to <tt class="docutils literal"><span class="pre">master</span></tt> will
+be what your users see when they double-click <strong>pull</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that users will pull from the <tt class="docutils literal"><span class="pre">master</span></tt> branch of the secure
+repository, and push to a branch name matching the username they chose in
+their VM.</p>
+</div>
+</div>
+<div class="section" id="adding-access-for-a-new-user">
+<h2>Adding access for a new user<a class="headerlink" href="#adding-access-for-a-new-user" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Send users a link to the basic user setup instructions, which will lead
+them to send you the SSH public key (created in their new virtual machine).</li>
+<li>Once you get the user&#8217;s ssh public key, add it to your secure repository
+server to grant them Read+Write access to your secure data repository.</li>
+<li>Notify the user they can proceed with the rest of the setup
+instructions (basically, <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span></tt> and double-clicking <strong>setup</strong>).</li>
+</ul>
+</div>
+<div class="section" id="merging-data-changes-from-users">
+<h2>Merging data changes from users<a class="headerlink" href="#merging-data-changes-from-users" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">To see updates from users:</p>
+<div class="highlight-python"><div class="highlight"><pre>git fetch datarepo
+</pre></div>
+</div>
+<p>(assuming you named your remote <tt class="docutils literal"><span class="pre">datarepo</span></tt>) and use your preferred tool
+(e.g. gitg) to view their branches.</p>
+</li>
+<li><p class="first">Use your preferred Git tool / merge method to merge the changes that
+you want to <tt class="docutils literal"><span class="pre">master</span></tt>.</p>
+</li>
+<li><p class="first">To distribute the changes to users, push them to the secure repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>git push datarepo master
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="adding-software-requirements-to-the-repository">
+<h2>Adding software requirements to the repository<a class="headerlink" href="#adding-software-requirements-to-the-repository" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>To specify required software, add Makerules that invoke
+standard tools such as <tt class="docutils literal"><span class="pre">apt-get</span></tt>, and add those makerule targets
+to the <tt class="docutils literal"><span class="pre">INSTALLS</span></tt> target list in the <tt class="docutils literal"><span class="pre">Makefile</span></tt>.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Secure repository Admin guide</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#setting-up-a-secure-data-repository">Setting up a secure data repository</a></li>
+<li><a class="reference internal" href="#adding-access-for-a-new-user">Adding access for a new user</a></li>
+<li><a class="reference internal" href="#merging-data-changes-from-users">Merging data changes from users</a></li>
+<li><a class="reference internal" href="#adding-software-requirements-to-the-repository">Adding software requirements to the repository</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="secure_vbox_mint_setup.html"
+                        title="previous chapter">Setting up Secure Repository Access Using VirtualBox + Mint</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/admin.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="secure_vbox_mint_setup.html" title="Setting up Secure Repository Access Using VirtualBox + Mint"
+             >previous</a> |</li>
+        <li><a href="index.html">EZgit 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Christopher Lee.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
